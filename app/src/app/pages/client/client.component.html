@@ -1,0 +1,67 @@
+
+<div class="client-container" fxLayout="column" fxLayoutAlign="center">
+
+  <div fxLayout.xs="column" fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+    
+    <core-overview-box 
+      fxFlex.sm="0 1 calc(50%)" fxFlex.md="0 1 calc(50%)" fxFlex.gt-md="0 1 calc(33%)"
+      label="Total de Clientes"
+      icon="people"
+      value="{{totals?.clientsAmount}}"
+      template="1"
+    ></core-overview-box>
+
+    <core-overview-box 
+      fxFlex.sm="0 1 calc(50%)" fxFlex.md="0 1 calc(50%)" fxFlex.gt-md="0 1 calc(33%)"
+      label="Total de Empreendimentos"
+      icon="apartment"
+      value="{{totals?.enterprisesAmount}}"
+      template="2"
+    ></core-overview-box>
+
+    <core-overview-box 
+      fxFlex.sm="0 1 calc(50%)" fxFlex.md="0 1 calc(50%)" fxFlex.gt-md="0 1 calc(33%)"
+      label="Total de imóveis "
+      icon="home"
+      value="{{totals?.realtiesAmount}}"
+      template="3"
+    ></core-overview-box>
+
+  </div>
+
+  <div fxLayout="column" fxLayout.gt-sm="row wrap" fxLayoutAlign="end">
+    <mat-form-field fxFlex.gt-sm="0 1 calc(50%-20px)" fxFlex="0 1 calc(100%-20px)" appearance="legacy">
+      <mat-label>Buscar cliente</mat-label>
+      <input #inputSearch matInput placeholder="Clientes">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="loading">
+    <mat-progress-bar mode="query"> </mat-progress-bar>
+  </div>
+
+  <div fxLayout.xs="column" fxLayout="row wrap"  fxLayoutGap="20px">
+
+    <mat-card  
+      *ngFor="let client of clients"
+      fxLayout="column" fxLayoutAlign="space-between stretch"  
+      fxFlex="0 1 calc(100%-20px)" fxFlex.sm="0 1 calc(50%-20px)" fxFlex.md="0 1 calc(33%-20px)" fxFlex.gt-md="0 1 calc(25%-20px)">
+      <img mat-card-image src={{client.image_src}} alt="Image client" ngClass.gt-md="lg-image" ngClass.lt-lg="md-image" ngClass.lt-md="">
+      <mat-card-subtitle>{{client.name}}</mat-card-subtitle>
+      <mat-card-content>
+          <mat-icon class="info" matTooltip="Total de empreendimentos">apartment</mat-icon>
+          <span class="info">{{client.enterprisesAmount}}</span>
+          <mat-icon class="info" matTooltip="Total de imóveis">home</mat-icon> 
+          <span class="info">{{client.realtiesAmount}}</span>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAling="end">
+        <button fxFlex mat-raised-button color="primary" (click)="openClient(client)">Saiba mais</button>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+
+  <core-empty-list *ngIf="!loading && clients?.length === 0"></core-empty-list>
+
+</div> 

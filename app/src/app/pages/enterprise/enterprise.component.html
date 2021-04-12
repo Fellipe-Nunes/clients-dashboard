@@ -1,0 +1,53 @@
+<div class="page-container" fxLayout="column" fxLayoutAlign="center">
+
+  <div fxLayout.xs="column" fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+    
+    <core-overview-box 
+      fxFlex.gt-xs="0 1 calc(50% -10px)"
+      label="Total de Empreendimentos"
+      icon="apartment"
+      value="{{totals?.enterprisesAmount}}"
+      template="1"
+    ></core-overview-box>
+
+    <core-overview-box 
+      fxFlex.gt-xs="0 1 calc(50% -10px)"
+      label="Total de imóveis "
+      icon="home"
+      value="{{totals?.realtiesAmount}}"
+      template="3"
+    ></core-overview-box>
+
+  </div>
+
+  <div fxLayout="column" fxLayout.gt-sm="row wrap" fxLayoutAlign="end">
+    <mat-form-field fxFlex.gt-sm="0 1 calc(50%-20px)" fxFlex="0 1 calc(100%-20px)" appearance="legacy">
+      <mat-label>Buscar Empreendimento</mat-label>
+      <input #inputSearch matInput placeholder="Empreendimento">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="loading">
+    <mat-progress-bar mode="query"> </mat-progress-bar>
+  </div>
+
+  <div fxLayout.xs="column" fxLayout="row wrap"  fxLayoutGap="20px">
+
+    <mat-card  
+      *ngFor="let enterprise of enterprises"
+      fxLayout="column" fxLayoutAlign="space-between stretch"  
+      fxFlex="0 1 calc(100%-20px)" fxFlex.sm="0 1 calc(50%-20px)" fxFlex.md="0 1 calc(33%-20px)" fxFlex.gt-md="0 1 calc(25%-20px)">
+      <img mat-card-image src={{enterprise.image_src}} alt="Image enterprise" ngClass.gt-md="lg-image" ngClass.lt-lg="md-image" ngClass.lt-md="">
+      <mat-card-subtitle>{{enterprise.name}}</mat-card-subtitle>
+      <mat-card-content>
+          <mat-icon class="info" matTooltip="Total de imóveis">home</mat-icon> 
+          <span class="info">{{enterprise.realties}}</span>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+  <core-empty-list *ngIf="!loading && enterprises?.length === 0"></core-empty-list>
+
+</div> 
